@@ -1,0 +1,1 @@
+draw_text(view_xport[0] + 100, view_yport[0] + 50, string_hash_to_newline(string(global.ammo) + "/" + string(global.ammomax)));
