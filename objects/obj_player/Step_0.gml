@@ -15,14 +15,22 @@ hspd = move * spd;
 vspd = vspd + grv;
 
 // COLISÃO HORIZONTAL
-if place_meeting(x+hspd,y,obj_floor)
-{
-	while(!place_meeting(x+sign(hspd),y,obj_floor))
+if place_meeting(x + hspd, y, obj_floor)
+{	
+		while(!place_meeting(x + sign(hspd), y, obj_floor))
 	{
-		x = x + sign(hspd)	
+		x = x + sign(hspd)
 	}
 	
 	hspd = 0;
+}
+
+if place_meeting(x + hspd, y, obj_wall){
+	while (!place_meeting(x + sign(hspd), y, obj_wall)){
+		x += sign(hspd)
+	}
+	
+	hspd = 0
 }
 
 x = x + hspd
@@ -53,42 +61,6 @@ if (place_meeting(x,y+1,obj_wall) and key_jump) or (place_meeting(x, y + 1, obj_
 }
 #endregion
 
-#region TIRO
-
-//de onde o tiro sai
-var _xx = x + lengthdir_x(40, image_angle)
-
-if (mb_shoot) && (!room_first){
-	
-	
-		if (global.ammo > 0) && (reload = false) && (can_shoot = true){
-		
-			can_shoot = false;
-			alarm[1] = 35;
-			
-			with(instance_create_layer(_xx, y + 10, "shoot", obj_shoot)){
-			
-				global.ammo--;
-				speed = 18;
-				direction = point_direction(x, y, mouse_x, mouse_y);
-				image_angle = direction;
-				}
-		}
-}
-
-// recarga de balas
-if (key_reload){
-	
-	if (reload = false) && (global.ammo < 30) && (global.ammomax >= 1){
-		
-		reload = true;
-		audio_play_sound(Glock_shoot, 1, 0)
-		alarm[0] = 50
-	}
-}
-
-#endregion
-
 if global.life <= 0 game_restart();
 
 peak_cursor();
@@ -98,7 +70,7 @@ peak_cursor();
 if (!place_meeting(x,y+1,obj_wall))
 {
 	sprite_index = spr_player_jumpInicial;
-	if (sign(vspd) > 0.5) sprite_index = spr_player_fall; else sprite_index = spr_player_jumpInicial;
+	if (sign(vspd) > 0.5) sprite_index = spr_player; else sprite_index = spr_player_jumpInicial;
 	
 }
 else

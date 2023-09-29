@@ -20,22 +20,48 @@ if (place_meeting(x + hspd, y, obj_enemy)) {
 vspd = vspd + grv;
 
 // COLISÃO HORIZONTAL
-if (place_meeting(x + hspd, y, obj_floor)) {
-    while(!place_meeting(x + sign(hspd), y, obj_floor)) {
-        x = x + sign(hspd);   
-    }
-    hspd = 0;
+if place_meeting(x + hspd, y, obj_floor)
+{	
+		while(!place_meeting(x + sign(hspd), y, obj_floor))
+	{
+		x = x + sign(hspd)
+	}
+	
+	hspd = 0;
 }
-x = x + hspd;
+
+if place_meeting(x + hspd, y, obj_wall){
+	while (!place_meeting(x + sign(hspd), y, obj_wall)){
+		x += sign(hspd)
+	}
+	
+	hspd = 0
+}
+
+x = x + hspd
 
 // COLISÃO VERTICAL
-if (place_meeting(x, y + vspd, obj_wall)) {
-    while (!place_meeting(x, y + sign(vspd), obj_wall)){
-        y = y + sign(vspd);
-    }
-    vspd = 0;
+if place_meeting(x,y+vspd,obj_wall){
+	
+	while(!place_meeting(x,y+sign(vspd),obj_wall))
+	{
+		y = y + sign(vspd);
+	}
+	
+	vspd = 0;
 }
-y = y + vspd;
+
+if place_meeting(x, y + vspd, obj_floor){
+	
+	vspd = 0;
+}
+
+if place_meeting(x, y + vspd, obj_enemy){
+	
+	vspd = 0;
+}
+
+y = y + vspd
 
 if (obj_player.x >= x) {
     image_xscale = 1;
